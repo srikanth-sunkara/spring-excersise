@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Guest Entries</title>
+</head>
+<body>
+
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
+    
+   
+   <form autocomplete="off" action="#" th:action="@{/admin/saveEntries}"
+						th:object="${guestEntries}" method="post" class="form-horizontal"
+						role="form" > 
+<table border="1">
+
+
+						
+    <thead>
+        <tr>
+            <th> User Name </th>
+            <th> Text Entry </th>
+            <th> Image Entry </th>
+            <th> Status </th>
+            <th> Delete </th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${guestEntries.empty}">
+            <td colspan="2"> No Entries Available </td>
+        </tr>
+        <tr th:each="guestEntry : ${guestEntries}">
+            <td><span th:text="${guestEntry.user.userName}"/> </td>
+            <td><span th:text="${guestEntry.text}"/> </td>
+            <td><img  th:src="${guestEntry.imageHtmlValue}" alt=""/> </td>
+            <td><span th:if="${guestEntry.approved}">Approved</span>
+             <span th:unless="${guestEntry.approved}"> <input type="checkbox" name="approveList" th:value="${guestEntry.id}"/></span></td>  
+              <td>
+             <span> <input type="checkbox" name="deleteList" th:value="${guestEntry.id}"/></span></td> 
+             
+        </tr>
+    </tbody>
+  
+</table>
+
+	<div class="form-group">
+							<div class="col-sm-9">
+								<button type="submit" class="btn btn-primary btn-block">Update
+									Entries</button>
+							</div>
+						</div>
+						
+  </form>
+</div>
+
+	
+							
+</body>
+</html>
